@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 window._ = require('lodash');
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios';
 import router from './router.js';
 
@@ -11,7 +11,7 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    // require('bootstrap');
 } catch (e) {}
 
 window.axios = axios;
