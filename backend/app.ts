@@ -1,10 +1,10 @@
-
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
-import { ApolloServer } from "apollo-server-express";
+
 import * as express from "express";
+import { ApolloServer } from "apollo-server-express";
 import {
   createConnection,
   DefaultNamingStrategy,
@@ -42,6 +42,21 @@ const schema = makeExecutableSchema({
 
 // Initialize the app
 const app = express();
+
+const server = new ApolloServer({
+    schema,
+    introspection: true,
+    context: async (session) => {
+      // console.log("ADM", {
+      //   ...getAdministratorData(session.req)
+      // });
+      return {
+        session,
+        user: getUserInfo(session.req),
+        ...getAdministratorData(session.req)
+      };
+    }
+  });
 
 // The GraphQL endpoint
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
